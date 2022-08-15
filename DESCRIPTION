@@ -1,0 +1,17 @@
+Package: AuditDataSteward
+Title: Audit report for data stewards
+Version: 0.0.0.9000
+Authors@R: 
+    person("Matt", "Nickodemus", , "mattnickodemus@gmail.com", role = c("aut", "cre")),
+    person("LaVoy", "Canfield", , "brentenlavoy@gmail.com", role = c("aut")),
+    person("Justin", "Preifer", "Justin.Pfeifer@utahtech.edu", role = c('aut')),
+    person("Utah Tech University", role = c("cph", "fnd"))
+Description: This package houses the files need to produce the audit report for the data stewards at Utah Tech University.
+License: MIT + file LICENSE
+Imports: 
+    config (>= 0.3.1),
+    golem (>= 0.3.2),
+    shiny (>= 1.7.1)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
