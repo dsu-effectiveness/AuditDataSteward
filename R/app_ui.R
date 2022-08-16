@@ -10,7 +10,27 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("AuditDataSteward")
+      h1("AuditDataSteward"),
+
+      sidebarLayout(
+        sidebarPanel(
+          # TODO: what should go here? User login info? Term setting?
+
+        ),
+        mainPanel(
+          tabsetPanel(
+            tabPanel("Home"),
+            tabPanel("Student",
+                     mod_smry_tab_ui("student_smry")),
+            tabPanel("Courses",
+                     mod_smry_tab_ui("courses_smry")),
+            tabPanel("Student Courses",
+                     mod_smry_tab_ui("student_courses_smry")),
+            tabPanel("Faculty Workload",
+                     mod_smry_tab_ui("faculty_workload_smry"))
+          )
+        )
+      )
     )
   )
 }
