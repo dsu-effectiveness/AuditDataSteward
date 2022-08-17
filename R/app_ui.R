@@ -3,8 +3,10 @@
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @importFrom shinyWidgets useShinydashboard
 #' @noRd
 app_ui <- function(request) {
+
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
@@ -19,15 +21,15 @@ app_ui <- function(request) {
         ),
         mainPanel(
           tabsetPanel(
-            tabPanel("Home"),
-            tabPanel("Student",
-                     mod_smry_tab_ui("student_smry")),
-            tabPanel("Courses",
-                     mod_smry_tab_ui("courses_smry")),
-            tabPanel("Student Courses",
-                     mod_smry_tab_ui("student_courses_smry")),
-            tabPanel("Faculty Workload",
-                     mod_smry_tab_ui("faculty_workload_smry"))
+            tabPanel(
+              "Home",
+              h3("Summary"),
+              mod_value_boxes_ui("home_smry")
+            ),
+            mod_smry_tab_ui("student_smry", "Student"),
+            mod_smry_tab_ui("courses_smry", "Courses"),
+            mod_smry_tab_ui("student_courses_smry", "Student Courses"),
+            mod_smry_tab_ui("faculty_workload_smry", "Faculty Workload")
           )
         )
       )
@@ -54,8 +56,9 @@ golem_add_external_resources <- function() {
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "AuditDataSteward"
-    )
+    ),
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
+    useShinydashboard() # Makes valueBox() available
   )
 }

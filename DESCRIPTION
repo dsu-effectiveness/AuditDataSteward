@@ -15,7 +15,9 @@ Imports:
     flexdashboard,
     golem (>= 0.3.2),
     gt,
-    shiny (>= 1.7.1)
+    shiny (>= 1.7.1),
+    shinydashboard,
+    shinyWidgets
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.0

@@ -1,7 +1,6 @@
 
 #' Takes a user id, returns value boxes
 #'
-#' @importFrom flexdashboard valueBox
 make_metric_row <- function() {
   fluidRow(
     valueBox("valbox1", icon = "fa-comments"),
