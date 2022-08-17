@@ -22,8 +22,9 @@ make_metric_row <- function() {
 #'  perspective. We may need to manipulate the output of the utValidateR package
 #'  to get it.
 #'
-make_summary_table <- function() {
-
+make_summary_table <- function(user_id, perspective) {
+  # Currently just a dummy table
+  shinipsum::random_table(nrow = 10, ncol = 5)
 }
 
 
@@ -33,7 +34,11 @@ make_summary_table <- function() {
 #' perspective and the user. These should be obtainable from the utValidateR
 #' functions.
 make_error_table <- function() {
-
+  # TODO
+  shinipsum::random_DT(nrow = 1000, ncol = 5,
+                       filter = "top",
+                       rownames = FALSE,
+                       options = list(autoWidth = TRUE))
 }
 
 

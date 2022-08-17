@@ -4,7 +4,7 @@
 \alias{make_summary_table}
 \title{Creates summary table for each tab.}
 \usage{
-make_summary_table()
+make_summary_table(user_id, perspective)
 }
 \description{
 This function should take a user id and a perspective as input and should

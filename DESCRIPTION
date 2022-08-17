@@ -12,6 +12,7 @@ Description: This package houses the files need to produce the audit report for 
 License: MIT + file LICENSE
 Imports: 
     config (>= 0.3.1),
+    DT,
     flexdashboard,
     golem (>= 0.3.2),
     gt,

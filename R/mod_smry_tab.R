@@ -15,7 +15,12 @@ mod_smry_tab_ui <- function(id, perspective){
   tabPanel(title = perspective,
     h2(perspective),
     mod_value_boxes_ui(ns("smry_tab")),
-    h3("")
+    h3(paste0(perspective, " Error Summary")),
+    tableOutput(ns("summary_table")),
+
+    h3(paste0(perspective, " Errors")),
+    DTOutput(ns("error_table"))
+
   )
 }
 
@@ -33,5 +38,12 @@ mod_smry_tab_server <- function(id){
     n_tables <- 8
 
     mod_value_boxes_server("smry_tab", n_errors, avg_age, n_total, pct_errors, n_tables)
+    output$summary_table <- renderTable(
+      make_summary_table(user_id = "TODO", perspective = perspective)
+    )
+    output$error_table <- renderDT(
+      make_error_table(),
+      server = TRUE
+    )
   })
 }
