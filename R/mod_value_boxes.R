@@ -22,8 +22,9 @@ mod_value_boxes_ui <- function(id){
 
 #' value_boxes Server Functions
 #'
+#' @param five_stats tibble, an element of `get_stats_tables()` result
 #' @noRd
-mod_value_boxes_server <- function(id, n_errors, avg_age, n_total, pct_errors, n_tables){
+mod_value_boxes_server <- function(id, five_stats){
 
   # Colors for value boxes TODO!
   n_errors_color <- "red"
@@ -37,31 +38,31 @@ mod_value_boxes_server <- function(id, n_errors, avg_age, n_total, pct_errors, n
     ns <- session$ns
 
     output$n_errors_valbox <- renderValueBox(
-      valueBox(n_errors,
+      valueBox(five_stats$n_errors,
                subtitle = "N. Errors",
                icon = icon("triangle-exclamation"),
                color = n_errors_color,
                width = 2.4))
     output$avg_age_valbox <- renderValueBox(
-      valueBox(value = avg_age,
+      valueBox(value = five_stats$avg_age,
                subtitle = "Average Age",
                icon = icon("calendar-day"),
                color = avg_age_color,
                width = 2.4))
     output$n_total_valbox <- renderValueBox(
-      valueBox(value = n_total,
+      valueBox(value = five_stats$n_data,
                subtitle = "Total Rules",
                icon = icon("hashtag"),
                color = n_total_color,
                width = 2.4))
     output$pct_errors_valbox <- renderValueBox(
-      valueBox(value = pct_errors,
+      valueBox(value = five_stats$pct_errors,
                subtitle = "Pct. Errors",
                icon = icon("percent"),
                color = pct_errors_color,
                width = 2.4))
     output$n_tables_valbox <- renderValueBox(
-      valueBox(value = n_tables,
+      valueBox(value = five_stats$n_tables,
                subtitle = "N. Tables",
                icon = icon("table-list"),
                color = n_tables_color,
