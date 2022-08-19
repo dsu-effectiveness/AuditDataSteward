@@ -3,6 +3,7 @@
 #' each element as returned by `get_stats_tables()`
 #'
 #' @param check_results Results of `utValidateR::do_checks()`, as returned by `load_data_in()`
+#' @importFrom purrr map
 get_app_data <- function() {
 
   check_results <- load_data_in()
@@ -47,6 +48,7 @@ get_utValidateR_checklist <- function() {
 #' @param check_results a result of `do_checks()` or a list of such results
 #' @param checklist the checklist used for check_results (the full checklist from utValidateR is fine)
 #' @param include_errors if TRUE (default), include the large tibble enumerating all errors
+#' @importFrom purrr map_dfr
 get_stats_tables <- function(check_results, checklist, include_errors = TRUE) {
 
   # Accommodate passing in multiple check_results e.g. for home tab, perspective/file mismatch
@@ -105,6 +107,8 @@ get_banner_table <- function(banner_field) {
 #'
 #' @param check_result result of `do_checks()`
 #' @param checklist checklist used by `do_checks()`
+#' @importFrom dplyr select mutate left_join
+#' @importFrom tidyr pivot_longer
 pivot_check_result <- function(check_result, checklist) {
 
   # Only need checklist for banner column--might want to refactor

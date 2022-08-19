@@ -13,13 +13,17 @@ License: MIT + file LICENSE
 Imports: 
     bslib,
     config (>= 0.3.1),
+    dplyr,
     DT,
     flexdashboard,
     golem (>= 0.3.2),
     gt,
+    magrittr,
+    purrr,
     shiny (>= 1.7.1),
     shinydashboard,
     shinyWidgets,
+    tidyr,
     utValidateR
 Encoding: UTF-8
 LazyData: true
