@@ -107,7 +107,7 @@ get_banner_table <- function(banner_field) {
 #'
 #' @param check_result result of `do_checks()`
 #' @param checklist checklist used by `do_checks()`
-#' @importFrom dplyr select mutate left_join
+#' @importFrom dplyr select mutate left_join row_number ends_with
 #' @importFrom tidyr pivot_longer
 pivot_check_result <- function(check_result, checklist) {
 
