@@ -2,8 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{get_stats_tables}
 \alias{get_stats_tables}
-\title{Returns a list of tables used by the app: `five_stats`, `error_summary`, and
-(if `include_errors == TRUE`) `errors`}
+\title{Compute dataframes used in shiny app displays}
 \usage{
 get_stats_tables(check_results, checklist, include_errors = TRUE)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{load_data_in}
 \alias{load_data_in}
-\title{Get the results of utValidateR checks}
+\title{Pull in the results of utValidateR checks}
 \usage{
 load_data_in()
 }

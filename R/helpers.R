@@ -1,59 +1,12 @@
 
-#' Takes a user id, returns value boxes
+#' Returns a list of lists of tables used by the app. Top level is per UI tab,
+#' each element as returned by `get_stats_tables()`
 #'
-make_metric_row <- function() {
-  fluidRow(
-    valueBox("valbox1", icon = "fa-comments"),
-    valueBox("valbox2"),
-    valueBox("valbox3"),
-    valueBox("valbox4"),
-    valueBox("valbox5")
-  )
-}
+#' @param check_results Results of `utValidateR::do_checks()`, as returned by `load_data_in()`
+get_app_data <- function() {
 
-
-
-#' Creates summary table for each tab.
-#'
-#'  This function should take a user id and a perspective as input and should
-#'  return a table. These tables should be will be small, so I recommend we use
-#'  the gt package. A description of the data points in the table is given in
-#'  the home tab section. Each data point should be associated with a
-#'  perspective. We may need to manipulate the output of the utValidateR package
-#'  to get it.
-#'
-make_summary_table <- function(user_id, perspective) {
-  # Currently just a dummy table
-  shinipsum::random_table(nrow = 10, ncol = 5)
-}
-
-
-#' This function will make the error table for each tab. This function should
-#' take a user id and a perspective as input and should return a table. These
-#' tables will contain all the data errors from utValidateR associated with the
-#' perspective and the user. These should be obtainable from the utValidateR
-#' functions.
-make_error_table <- function() {
-  # TODO
-  shinipsum::random_DT(nrow = 1000, ncol = 5,
-                       filter = "top",
-                       rownames = FALSE,
-                       options = list(autoWidth = TRUE))
-}
-
-
-#' Get the results of utValidateR checks
-#'
-#' Currenlty just loads saved dummy data from dev-data/
-load_data_in <- function() {
-  check_results <- list(
-    student = readRDS("dev-data/student_res.rds"),
-    course = readRDS("dev-data/course_res.rds"),
-    student_course = readRDS("dev-data/student_course_res.rds")
-  )
-
-  data("checklist", package = "utValidateR", envir = environment())
-
+  check_results <- load_data_in()
+  checklist <- get_utValidateR_checklist()
   out <- map(check_results, ~get_stats_tables(., checklist = checklist))
 
   # Add the summary across all results in check_results
@@ -63,48 +16,31 @@ load_data_in <- function() {
 }
 
 
-
-#' Extract the table name from a banner field string
+#' Pull in the results of utValidateR checks
 #'
-#' @param banner_field a string formatted like `"banner.<table>_<field>"`
-get_banner_table <- function(banner_field) {
-  # presently simple, may need to add checks later
-  out <- gsub("^banner\\.", "", gsub("_.+", "", banner_field))
-  out
+#' Currenlty just loads saved dummy data from dev-data/
+load_data_in <- function() {
+  check_results <- list(
+    student = readRDS("dev-data/student_res.rds"),
+    course = readRDS("dev-data/course_res.rds"),
+    student_course = readRDS("dev-data/student_course_res.rds")
+  )
 }
 
-#' Pivot result of `do_checks()` into a longer format
+#' Retrieves the checklist data object from the utValidateR package
 #'
-#' Returns a tibble with columns row, rule, status, age, table
-#'
-#' @param check_result result of `do_checks()`
-#' @param checklist checklist used by `do_checks()`
-pivot_check_result <- function(check_result, checklist) {
-
-  # Only need checklist for banner column--might want to refactor
-  bannerdf <- checklist %>%
-    mutate(table = get_banner_table(banner)) %>%
-    select(rule, table)
-
-  agedf <- check_result %>%
-    select(ends_with("_error_age")) %>%
-    mutate(row = row_number()) %>%
-    pivot_longer(cols = c(-row), names_to = "rule", values_to = "age") %>%
-    mutate(rule = gsub("_error_age$", "", rule))
-
-  statusdf <- check_result %>%
-    select(ends_with("_status")) %>%
-    mutate(row = row_number()) %>%
-    pivot_longer(cols = c(-row), names_to = "rule", values_to = "status") %>%
-    mutate(rule = gsub("_status$", "", rule))
-
-  out <- statusdf %>%
-    left_join(agedf, by = c("row", "rule")) %>%
-    left_join(bannerdf, by = "rule")
-
-  out
+#' Assumes that the currently installed version of utValidateR was used to
+#' generate the check_results object
+get_utValidateR_checklist <- function() {
+  data("checklist", package = "utValidateR", envir = environment())
+  checklist
 }
 
+
+
+
+#' Compute dataframes used in shiny app displays
+#'
 #' Returns a list of tables used by the app: `five_stats`, `error_summary`, and
 #' (if `include_errors == TRUE`) `errors`
 #'
@@ -150,5 +86,47 @@ get_stats_tables <- function(check_results, checklist, include_errors = TRUE) {
   out <- list(five_stats = five_stats,
               error_summary = error_summary,
               errors = errordf)
+  out
+}
+
+
+#' Extract the table name from a banner field string
+#'
+#' @param banner_field a string formatted like `"banner.<table>_<field>"`
+get_banner_table <- function(banner_field) {
+  # presently simple, may need to add checks later
+  out <- gsub("^banner\\.", "", gsub("_.+", "", banner_field))
+  out
+}
+
+#' Pivot result of `do_checks()` into a longer format
+#'
+#' Returns a tibble with columns row, rule, status, age, table
+#'
+#' @param check_result result of `do_checks()`
+#' @param checklist checklist used by `do_checks()`
+pivot_check_result <- function(check_result, checklist) {
+
+  # Only need checklist for banner column--might want to refactor
+  bannerdf <- checklist %>%
+    mutate(table = get_banner_table(banner)) %>%
+    select(rule, table)
+
+  agedf <- check_result %>%
+    select(ends_with("_error_age")) %>%
+    mutate(row = row_number()) %>%
+    pivot_longer(cols = c(-row), names_to = "rule", values_to = "age") %>%
+    mutate(rule = gsub("_error_age$", "", rule))
+
+  statusdf <- check_result %>%
+    select(ends_with("_status")) %>%
+    mutate(row = row_number()) %>%
+    pivot_longer(cols = c(-row), names_to = "rule", values_to = "status") %>%
+    mutate(rule = gsub("_status$", "", rule))
+
+  out <- statusdf %>%
+    left_join(agedf, by = c("row", "rule")) %>%
+    left_join(bannerdf, by = "rule")
+
   out
 }

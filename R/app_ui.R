@@ -13,27 +13,19 @@ app_ui <- function(request) {
     # Your application UI logic
     fluidPage(
       h1("AuditDataSteward"),
-
-      sidebarLayout(
-        sidebarPanel(
-          # TODO: what should go here? User login info? Term setting?
-
+      tabsetPanel(
+        tabPanel(
+          "Home",
+          h3("Summary"),
+          mod_value_boxes_ui("home_smry"),
+          tableOutput("home_summary_table")
         ),
-        mainPanel(
-          tabsetPanel(
-            tabPanel(
-              "Home",
-              h3("Summary"),
-              mod_value_boxes_ui("home_smry"),
-              tableOutput("home_summary_table")
-            ),
-            mod_smry_tab_ui("student_smry", "Student"),
-            mod_smry_tab_ui("courses_smry", "Courses"),
-            mod_smry_tab_ui("student_courses_smry", "Student Courses"),
-            mod_smry_tab_ui("faculty_workload_smry", "Faculty Workload")
-          )
-        )
-      )
+        mod_smry_tab_ui("student_smry", "Student"),
+        mod_smry_tab_ui("courses_smry", "Courses"),
+        mod_smry_tab_ui("student_courses_smry", "Student Courses"),
+        mod_smry_tab_ui("faculty_workload_smry", "Faculty Workload")
+      ),
+      theme = bslib::bs_theme(bootswatch = "spacelab") # TODO: update theme
     )
   )
 }
