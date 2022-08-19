@@ -23,11 +23,19 @@ The goal of AuditDataSteward is to house all the files necessary to produce the 
 
 ## Installation
 
-You can install the development version of AuditDataSteward from [GitHub](https://github.com/) with:
+utValidateR is a prerequisite for the AuditDataSteward app. To install from github:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("dsu-effectiveness/AuditDataSteward")
+devtools::install_github("dsu-effectiveness/utValidateR")
+```
+
+
+You can then install the development version of AuditDataSteward from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("dsu-effectiveness/AuditDataSteward", ref = "develop")
 ```
 
 ## Example
@@ -37,4 +45,5 @@ This is a basic example which shows you how to solve a common problem:
 ```{r example}
 #library(AuditDataSteward)
 ## basic example code
+AuditDataSteward::run_app()
 ```

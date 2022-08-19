@@ -14,12 +14,20 @@ produce the audit report for the data stewards at Utah Tech University.
 
 ## Installation
 
-You can install the development version of AuditDataSteward from
+utValidateR is a prerequisite for the AuditDataSteward app. To install
+from github:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("dsu-effectiveness/utValidateR")
+```
+
+You can then install the development version of AuditDataSteward from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("dsu-effectiveness/AuditDataSteward")
+devtools::install_github("dsu-effectiveness/AuditDataSteward", ref = "develop")
 ```
 
 ## Example

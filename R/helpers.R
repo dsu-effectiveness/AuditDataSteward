@@ -32,6 +32,7 @@ load_data_in <- function() {
 #'
 #' Assumes that the currently installed version of utValidateR was used to
 #' generate the check_results object
+#' @importFrom utils data
 get_utValidateR_checklist <- function() {
   data("checklist", package = "utValidateR", envir = environment())
   checklist
@@ -49,8 +50,8 @@ get_utValidateR_checklist <- function() {
 #' @param checklist the checklist used for check_results (the full checklist from utValidateR is fine)
 #' @param include_errors if TRUE (default), include the large tibble enumerating all errors
 #' @importFrom purrr map_dfr
+#' @importFrom dplyr group_by summarize n
 get_stats_tables <- function(check_results, checklist, include_errors = TRUE) {
-
   # Accommodate passing in multiple check_results e.g. for home tab, perspective/file mismatch
   if (inherits(check_results, "data.frame"))
     check_results <- list(check_results)
@@ -64,8 +65,9 @@ get_stats_tables <- function(check_results, checklist, include_errors = TRUE) {
   # data for DT to display--if desired
   errordf <- NULL # Not sure if I like including an explicitly null element...
   if (include_errors) {
-    errordf <- statusdf %>%
-      filter(status == "Failure")
+    dplyr::glimpse(statusdf)
+    errordf <- statusdf[statusdf$status == "Failure", ]
+    if (inherits(errordf, "try-error")) browser()
   }
 
   # static table to display
