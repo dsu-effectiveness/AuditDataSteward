@@ -4,9 +4,9 @@
 #'
 #' @param check_results Results of `utValidateR::do_checks()`, as returned by `load_data_in()`
 #' @importFrom purrr map
-get_app_data <- function() {
+get_app_data <- function(session = shiny::getDefaultReactiveDomain()) {
 
-  check_results <- load_data_in()
+  check_results <- load_data_in(session = session)
   checklist <- get_utValidateR_checklist()
   out <- map(check_results, ~get_stats_tables(., checklist = checklist))
 
@@ -20,11 +20,16 @@ get_app_data <- function() {
 #' Pull in the results of utValidateR checks
 #'
 #' Currenlty just loads saved dummy data from dev-data/
-load_data_in <- function() {
+load_data_in <- function(session = shiny::getDefaultReactiveDomain()) {
+
+  studentdf <- withModal(readRDS("dev-data/student_res.rds"), "Loading Student Data", session)
+  coursedf <- withModal(readRDS("dev-data/course_res.rds"), "Loading Course Data", session)
+  student_coursedf <- withModal(readRDS("dev-data/student_course_res.rds"), "Loading Student-Course Data", session)
+
   check_results <- list(
-    student = readRDS("dev-data/student_res.rds"),
-    course = readRDS("dev-data/course_res.rds"),
-    student_course = readRDS("dev-data/student_course_res.rds")
+    student = studentdf,
+    course = coursedf,
+    student_course = student_coursedf
   )
 }
 
