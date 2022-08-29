@@ -44,7 +44,7 @@ mod_value_boxes_server <- function(id, five_stats){
                color = n_errors_color,
                width = 2))
     output$avg_age_valbox <- renderValueBox(
-      valueBox(value = five_stats$avg_age,
+      valueBox(value = paste(round(five_stats$avg_age), "Days"),
                subtitle = "Average Age",
                icon = icon("calendar-day"),
                color = avg_age_color,
@@ -56,7 +56,7 @@ mod_value_boxes_server <- function(id, five_stats){
                color = n_total_color,
                width = 2))
     output$pct_errors_valbox <- renderValueBox(
-      valueBox(value = five_stats$pct_errors,
+      valueBox(value = paste0(round(five_stats$pct_errors, digits = 1), "%"),
                subtitle = "Pct. Errors",
                icon = icon("percent"),
                color = pct_errors_color,
