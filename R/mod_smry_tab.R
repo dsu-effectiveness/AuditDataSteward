@@ -10,6 +10,7 @@
 #' @importFrom shiny NS tagList
 #' @importFrom shinydashboard valueBoxOutput valueBox renderValueBox
 #' @importFrom DT DTOutput
+#' @importFrom gt gt_output
 mod_smry_tab_ui <- function(id, perspective){
   ns <- NS(id)
 
@@ -17,7 +18,7 @@ mod_smry_tab_ui <- function(id, perspective){
     h2(perspective),
     mod_value_boxes_ui(ns("smry_tab")),
     h3(paste0(perspective, " Error Summary")),
-    tableOutput(ns("summary_table")),
+    gt_output(ns("summary_table")),
 
     h3(paste0(perspective, " Errors")),
     DTOutput(ns("error_table"))
@@ -29,14 +30,15 @@ mod_smry_tab_ui <- function(id, perspective){
 #'
 #' @param stats_tables result of `get_stats_tables()`
 #' @importFrom DT renderDT
+#' @importFrom gt render_gt
 #' @noRd
 mod_smry_tab_server <- function(id, stats_tables){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
     mod_value_boxes_server("smry_tab", stats_tables$five_stats)
-    output$summary_table <- renderTable(
-      stats_tables$error_summary
+    output$summary_table <- render_gt(
+      format_summary_table(stats_tables$error_summary)
     )
     output$error_table <- renderDT(
       stats_tables$errors,

@@ -3,15 +3,18 @@
 #' each element as returned by `get_stats_tables()`
 #'
 #' @param check_results Results of `utValidateR::do_checks()`, as returned by `load_data_in()`
-#' @importFrom purrr map
+#' @importFrom purrr map imap
 get_app_data <- function(session = shiny::getDefaultReactiveDomain()) {
 
   check_results <- load_data_in(session = session)
   checklist <- get_utValidateR_checklist()
-  out <- map(check_results, ~get_stats_tables(., checklist = checklist))
+  out <- imap(check_results,
+              ~withModal(get_stats_tables(.x, checklist = checklist),
+                         paste0("Preparing data: ", .y)))
 
   # Add the summary across all results in check_results
-  out$home <- get_stats_tables(check_results, checklist, include_errors = FALSE)
+  out$home <- withModal(get_stats_tables(check_results, checklist, include_errors = FALSE),
+                        "Preparing home-tab summary")
 
   out
 }
@@ -44,8 +47,6 @@ get_utValidateR_checklist <- function() {
 }
 
 
-
-
 #' Compute dataframes used in shiny app displays
 #'
 #' Returns a list of tables used by the app: `five_stats`, `error_summary`, and
@@ -70,7 +71,6 @@ get_stats_tables <- function(check_results, checklist, include_errors = TRUE) {
   # data for DT to display--if desired
   errordf <- NULL # Not sure if I like including an explicitly null element...
   if (include_errors) {
-    dplyr::glimpse(statusdf)
     errordf <- statusdf[statusdf$status == "Failure", ]
     if (inherits(errordf, "try-error")) browser()
   }

@@ -18,7 +18,7 @@ app_ui <- function(request) {
           "Home",
           h3("Summary"),
           mod_value_boxes_ui("home_smry"),
-          tableOutput("home_summary_table")
+          gt_output("home_summary_table")
         ),
         mod_smry_tab_ui("student_smry", "Student"), # returns a tabPanel
         mod_smry_tab_ui("courses_smry", "Courses"),

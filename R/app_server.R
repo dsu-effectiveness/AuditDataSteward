@@ -10,8 +10,8 @@ app_server <- function(input, output, session) {
 
   # Home tab
   mod_value_boxes_server("home_smry", app_data$home$five_stats)
-  output$home_summary_table <- renderTable(
-    app_data$home$error_summary
+  output$home_summary_table <- render_gt(
+    format_summary_table(app_data$home$error_summary)
   )
 
   # Summary tabs

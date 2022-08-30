@@ -4,7 +4,7 @@
 \alias{withModal}
 \title{Show a modal notification when evaluating an expression}
 \usage{
-withModal(expr, message, session)
+withModal(expr, message, session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
 \item{message}{Message to be displayed}
