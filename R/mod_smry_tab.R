@@ -14,14 +14,19 @@
 mod_smry_tab_ui <- function(id, perspective){
   ns <- NS(id)
 
-  tabPanel(title = perspective,
-    h2(perspective),
-    mod_value_boxes_ui(ns("smry_tab")),
-    h3(paste0(perspective, " Error Summary")),
-    gt_output(ns("summary_table")),
+  tabPanel(
+    title = perspective,
+    column(width = 8,
+      h2(perspective),
+      mod_value_boxes_ui(ns("smry_tab")),
+      h3(paste0(perspective, " Error Summary")),
+      gt_output(ns("summary_table")),
 
-    h3(paste0(perspective, " Errors")),
-    DTOutput(ns("error_table"))
+      h3(paste0(perspective, " Errors")),
+      DTOutput(ns("error_table")),
+      offset = 2,
+      br()
+    )
 
   )
 }
@@ -32,7 +37,7 @@ mod_smry_tab_ui <- function(id, perspective){
 #' @importFrom DT renderDT
 #' @importFrom gt render_gt
 #' @noRd
-mod_smry_tab_server <- function(id, stats_tables){
+mod_smry_tab_server <- function(id, stats_tables) {
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
@@ -41,7 +46,7 @@ mod_smry_tab_server <- function(id, stats_tables){
       format_summary_table(stats_tables$error_summary)
     )
     output$error_table <- renderDT(
-      stats_tables$errors,
+      format_error_table(stats_tables$errors),
       server = TRUE
     )
   })

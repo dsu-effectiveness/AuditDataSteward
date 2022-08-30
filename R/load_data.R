@@ -72,7 +72,6 @@ get_stats_tables <- function(check_results, checklist, include_errors = TRUE) {
   errordf <- NULL # Not sure if I like including an explicitly null element...
   if (include_errors) {
     errordf <- statusdf[statusdf$status == "Failure", ]
-    if (inherits(errordf, "try-error")) browser()
   }
 
   # static table to display

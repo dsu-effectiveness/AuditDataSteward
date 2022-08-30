@@ -16,9 +16,12 @@ app_ui <- function(request) {
       tabsetPanel(
         tabPanel(
           "Home",
-          h3("Summary"),
-          mod_value_boxes_ui("home_smry"),
-          gt_output("home_summary_table")
+          column(width = 8,
+            h3("Summary"),
+            mod_value_boxes_ui("home_smry"),
+            gt_output("home_summary_table"),
+            offset = 2
+          )
         ),
         mod_smry_tab_ui("student_smry", "Student"), # returns a tabPanel
         mod_smry_tab_ui("courses_smry", "Courses"),

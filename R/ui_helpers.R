@@ -40,3 +40,21 @@ format_summary_table <- function(summary_table) {
     )
 }
 
+#' Returns a DT::datatable object for displaying
+#'
+#' @param error_table dataframe as returned in `errors` component of `get_stats_tables()`
+#' @importFrom dplyr select
+#' @export
+format_error_table <- function(error_table) {
+  out <- error_table %>%
+    select(Table = table, Row = row, Rule = rule, `Age (days)` = age) %>%
+    DT::datatable(
+      data = .,
+      options = list(scrollY = 300, scroller = TRUE, deferRender = TRUE),
+      rownames = FALSE,
+      filter = list(position = 'top', clear = TRUE, plain = FALSE),
+      extensions = "Scroller"
+    )
+  out
+}
+
