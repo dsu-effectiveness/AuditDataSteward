@@ -22,7 +22,7 @@ withModal <- function(expr, message, session = shiny::getDefaultReactiveDomain()
 #' @param summary_table dataframe, as returned in `error_summary` component of
 #' `get_stats_tables()` output
 #'
-#' @importFrom gt gt fmt_percent fmt_integer cols_label
+#' @importFrom gt gt fmt_percent fmt_integer cols_label sub_missing
 #' @export
 format_summary_table <- function(summary_table) {
   out <- summary_table %>%

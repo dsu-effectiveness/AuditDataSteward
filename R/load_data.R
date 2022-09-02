@@ -25,9 +25,12 @@ get_app_data <- function(session = shiny::getDefaultReactiveDomain()) {
 #' Currenlty just loads saved dummy data from dev-data/
 load_data_in <- function(session = shiny::getDefaultReactiveDomain()) {
 
-  studentdf <- withModal(readRDS("dev-data/student_res.rds"), "Loading Student Data", session)
-  coursedf <- withModal(readRDS("dev-data/course_res.rds"), "Loading Course Data", session)
-  student_coursedf <- withModal(readRDS("dev-data/student_course_res.rds"), "Loading Student-Course Data", session)
+  studentdf <- withModal(readRDS(app_sys("dev-data/student_res.rds")),
+                         "Loading Student Data", session)
+  coursedf <- withModal(readRDS(app_sys("dev-data/course_res.rds")),
+                        "Loading Course Data", session)
+  student_coursedf <- withModal(readRDS(app_sys("dev-data/student_course_res.rds")),
+                                "Loading Student-Course Data", session)
 
   check_results <- list(
     student = studentdf,

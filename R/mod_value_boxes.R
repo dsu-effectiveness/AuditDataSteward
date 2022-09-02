@@ -51,7 +51,7 @@ mod_value_boxes_server <- function(id, five_stats){
                width = 2))
     output$n_total_valbox <- renderValueBox(
       valueBox(value = five_stats$n_data,
-               subtitle = "Total Rules",
+               subtitle = "Total Items",
                icon = icon("hashtag"),
                color = n_total_color,
                width = 2))
