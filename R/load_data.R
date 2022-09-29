@@ -104,6 +104,16 @@ get_stats_tables <- function(check_results, checklist, id_cols = character(0), i
     ) %>%
     mutate(pct_errors = n_errors / n_data * 100)
 
+  # by-rule summary for drill-down
+  errors_byrule <- statusdf %>%
+    group_by(table, rule) %>%
+    summarize(n_data = n(),
+              n_errors = sum(status == "Failure"),
+              age = mean(age, na.rm = TRUE) #TODO: should this be across errors only? Could be biased by missingness
+    ) %>%
+    ungroup() %>%
+    mutate(pct_errors = n_errors / n_data * 100)
+
   # 5-stat summary to display
   five_stats <- statusdf %>%
     summarize(n_errors = sum(status == "Failure"),
@@ -114,6 +124,7 @@ get_stats_tables <- function(check_results, checklist, id_cols = character(0), i
 
   out <- list(five_stats = five_stats,
               error_summary = error_summary,
+              errors_byrule = errors_byrule,
               errors = errordf)
   out
 }

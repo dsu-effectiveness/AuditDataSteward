@@ -22,6 +22,9 @@ mod_smry_tab_ui <- function(id, perspective){
       h3(paste0(perspective, " Error Summary")),
       gt_output(ns("summary_table")),
 
+      h3(paste0(perspective, " Rule Summary")),
+      DTOutput(ns("rule_table")),
+
       h3(paste0(perspective, " Errors")),
       DTOutput(ns("error_table")),
       offset = 2,
@@ -44,6 +47,9 @@ mod_smry_tab_server <- function(id, stats_tables) {
     mod_value_boxes_server("smry_tab", stats_tables$five_stats)
     output$summary_table <- render_gt(
       format_summary_table(stats_tables$error_summary)
+    )
+    output$rule_table <- renderDT(
+      format_rule_table(stats_tables$errors_byrule)
     )
     output$error_table <- renderDT(
       format_error_table(stats_tables$errors),

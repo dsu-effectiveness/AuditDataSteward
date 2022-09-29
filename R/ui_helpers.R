@@ -59,3 +59,23 @@ format_error_table <- function(error_table) {
   out
 }
 
+
+
+#' Returns a DT::datatable object for displaying
+#'
+#' @param error_table dataframe as returned in `errors_byrule` component of `get_stats_tables()`
+#' @importFrom dplyr select
+#' @export
+format_rule_table <- function(rule_table) {
+  out <- rule_table %>%
+    DT::datatable(
+      data = .,
+      options = list(scrollY = 300, scroller = TRUE, deferRender = TRUE),
+      rownames = FALSE,
+      filter = list(position = 'top', clear = TRUE, plain = FALSE),
+      extensions = "Scroller",
+      selection = "single"
+    )
+  out
+}
+

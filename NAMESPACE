@@ -2,6 +2,7 @@
 
 export("%>%")
 export(format_error_table)
+export(format_rule_table)
 export(format_summary_table)
 export(run_app)
 export(withModal)
