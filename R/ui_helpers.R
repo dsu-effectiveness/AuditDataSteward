@@ -45,7 +45,12 @@ format_summary_table <- function(summary_table) {
 #' @param error_table dataframe as returned in `errors` component of `get_stats_tables()`
 #' @importFrom dplyr select
 #' @export
-format_error_table <- function(error_table) {
+format_error_table <- function(error_table, rule = NULL) {
+
+  rule_in <- rule
+  if (!is.null(rule_in))
+    error_table <- dplyr::filter(error_table, rule %in% rule_in)
+
   out <- error_table %>%
     select(-row) %>%
     rename(Table = table, Rule = rule, `Age (days)` = age) %>%
