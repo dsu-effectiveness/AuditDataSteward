@@ -47,7 +47,8 @@ format_summary_table <- function(summary_table) {
 #' @export
 format_error_table <- function(error_table) {
   out <- error_table %>%
-    select(Table = table, Row = row, Rule = rule, `Age (days)` = age) %>%
+    select(-row) %>%
+    rename(Table = table, Rule = rule, `Age (days)` = age) %>%
     DT::datatable(
       data = .,
       options = list(scrollY = 300, scroller = TRUE, deferRender = TRUE),

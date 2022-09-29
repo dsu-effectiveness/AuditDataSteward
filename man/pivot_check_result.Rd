@@ -4,13 +4,16 @@
 \alias{pivot_check_result}
 \title{Pivot result of `do_checks()` into a longer format}
 \usage{
-pivot_check_result(check_result, checklist)
+pivot_check_result(check_result, checklist, id_cols)
 }
 \arguments{
 \item{check_result}{result of `do_checks()`}
 
 \item{checklist}{checklist used by `do_checks()`}
+
+\item{id_cols}{columns to keep for pivot_longer()}
 }
 \description{
 Returns a tibble with columns row, rule, status, age, table
+<-
 }

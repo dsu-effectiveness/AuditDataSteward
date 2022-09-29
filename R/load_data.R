@@ -8,13 +8,30 @@ get_app_data <- function(session = shiny::getDefaultReactiveDomain()) {
 
   check_results <- load_data_in(session = session)
   checklist <- get_utValidateR_checklist()
+
   out <- imap(check_results,
-              ~withModal(get_stats_tables(.x, checklist = checklist),
+              ~withModal(get_stats_tables(.x,
+                                          checklist = checklist,
+                                          id_cols = get_pivot_id_cols(.y)),
                          paste0("Preparing data: ", .y)))
 
   # Add the summary across all results in check_results
   out$home <- withModal(get_stats_tables(check_results, checklist, include_errors = FALSE),
                         "Preparing home-tab summary")
+
+  out
+}
+
+#' Returns the vector of id columns for the relevant file's error table
+#'
+#' This will need to be updated in future.
+get_pivot_id_cols <- function(file = c("student", "course", "student_course")) {
+  file <- match.arg(file)
+
+  out <- if (file == "student") c("term_id", "student_id", "first_name", "last_name")
+  else if (file == "course") c("term_id", "course_reference_number")
+  else if (file == "student_course") c("course_reference_number", "sis_student_id", "sis_system_id")
+  else stop("file has no associated id_cols")
 
   out
 }
@@ -60,7 +77,7 @@ get_utValidateR_checklist <- function() {
 #' @param include_errors if TRUE (default), include the large tibble enumerating all errors
 #' @importFrom purrr map_dfr
 #' @importFrom dplyr group_by summarize n
-get_stats_tables <- function(check_results, checklist, include_errors = TRUE) {
+get_stats_tables <- function(check_results, checklist, id_cols = character(0), include_errors = TRUE) {
   # Accommodate passing in multiple check_results e.g. for home tab, perspective/file mismatch
   if (inherits(check_results, "data.frame"))
     check_results <- list(check_results)
@@ -69,7 +86,8 @@ get_stats_tables <- function(check_results, checklist, include_errors = TRUE) {
   # A long tibble with one row per rule and instance checked. We'll summarize
   # before returning to minimize memory footprint but this intermediate object
   # may be large
-  statusdf <- map_dfr(check_results, ~pivot_check_result(., checklist))
+  statusdf <- check_results %>%
+    map_dfr(~pivot_check_result(., checklist, id_cols = id_cols))
 
   # data for DT to display--if desired
   errordf <- NULL # Not sure if I like including an explicitly null element...
@@ -110,15 +128,17 @@ get_banner_table <- function(banner_field) {
   out
 }
 
+
 #' Pivot result of `do_checks()` into a longer format
 #'
 #' Returns a tibble with columns row, rule, status, age, table
-#'
+#' <-
 #' @param check_result result of `do_checks()`
 #' @param checklist checklist used by `do_checks()`
+#' @param id_cols columns to keep for pivot_longer()
 #' @importFrom dplyr select mutate left_join row_number ends_with
 #' @importFrom tidyr pivot_longer
-pivot_check_result <- function(check_result, checklist) {
+pivot_check_result <- function(check_result, checklist, id_cols) {
 
   # Only need checklist for banner column--might want to refactor
   bannerdf <- checklist %>%
@@ -132,9 +152,9 @@ pivot_check_result <- function(check_result, checklist) {
     mutate(rule = gsub("_error_age$", "", rule))
 
   statusdf <- check_result %>%
-    select(ends_with("_status")) %>%
+    select(c(any_of(id_cols), ends_with("_status"))) %>%
     mutate(row = row_number()) %>%
-    pivot_longer(cols = c(-row), names_to = "rule", values_to = "status") %>%
+    pivot_longer(cols = !c(row, any_of(id_cols)), names_to = "rule", values_to = "status") %>%
     mutate(rule = gsub("_status$", "", rule))
 
   out <- statusdf %>%

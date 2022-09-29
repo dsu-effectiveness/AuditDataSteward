@@ -4,7 +4,12 @@
 \alias{get_stats_tables}
 \title{Compute dataframes used in shiny app displays}
 \usage{
-get_stats_tables(check_results, checklist, include_errors = TRUE)
+get_stats_tables(
+  check_results,
+  checklist,
+  id_cols = character(0),
+  include_errors = TRUE
+)
 }
 \arguments{
 \item{check_results}{a result of `do_checks()` or a list of such results}
