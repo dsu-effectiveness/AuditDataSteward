@@ -16,7 +16,10 @@ get_stats_tables(
 
 \item{checklist}{the checklist used for check_results (the full checklist from utValidateR is fine)}
 
-\item{include_errors}{if TRUE (default), include the large tibble enumerating all errors}
+\item{id_cols}{columns to keep for displaying in error datatable, from `get_pivot_id_cols()`}
+
+\item{include_errors}{if TRUE (default), include the large tibble enumerating all errors.
+This is used for all tabs except home tab.}
 }
 \description{
 Returns a list of tables used by the app: `five_stats`, `error_summary`, and

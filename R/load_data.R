@@ -74,10 +74,16 @@ get_utValidateR_checklist <- function() {
 #'
 #' @param check_results a result of `do_checks()` or a list of such results
 #' @param checklist the checklist used for check_results (the full checklist from utValidateR is fine)
-#' @param include_errors if TRUE (default), include the large tibble enumerating all errors
+#' @param id_cols columns to keep for displaying in error datatable, from `get_pivot_id_cols()`
+#' @param include_errors if TRUE (default), include the large tibble enumerating all errors.
+#'  This is used for all tabs except home tab.
+#'
 #' @importFrom purrr map_dfr
 #' @importFrom dplyr group_by summarize n
-get_stats_tables <- function(check_results, checklist, id_cols = character(0), include_errors = TRUE) {
+get_stats_tables <- function(check_results,
+                             checklist,
+                             id_cols = character(0),
+                             include_errors = TRUE) {
   # Accommodate passing in multiple check_results e.g. for home tab, perspective/file mismatch
   if (inherits(check_results, "data.frame"))
     check_results <- list(check_results)
@@ -174,3 +180,5 @@ pivot_check_result <- function(check_result, checklist, id_cols) {
 
   out
 }
+
+
