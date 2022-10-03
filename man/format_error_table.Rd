@@ -4,7 +4,12 @@
 \alias{format_error_table}
 \title{Returns a DT::datatable object for displaying}
 \usage{
-format_error_table(error_table, rule = NULL)
+format_error_table(
+  error_table,
+  value_table,
+  rule = NULL,
+  file = c("student", "course", "student_course")
+)
 }
 \arguments{
 \item{error_table}{dataframe as returned in `errors` component of `get_stats_tables()`}

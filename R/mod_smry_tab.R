@@ -40,7 +40,8 @@ mod_smry_tab_ui <- function(id, perspective){
 #' @importFrom DT renderDT
 #' @importFrom gt render_gt
 #' @noRd
-mod_smry_tab_server <- function(id, stats_tables) {
+mod_smry_tab_server <- function(id, stats_tables, file = c("student", "course", "student_course")) {
+  file <- match.arg(file)
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
@@ -53,7 +54,10 @@ mod_smry_tab_server <- function(id, stats_tables) {
     )
     output$error_table <- renderDT({
       selected_rule <- stats_tables$errors_byrule$rule[input$rule_table_rows_selected]
-      format_error_table(stats_tables$errors, rule = selected_rule)
+      format_error_table(stats_tables$errors,
+                         stats_tables$values,
+                         rule = selected_rule,
+                         file = file)
       },
       server = TRUE
     )

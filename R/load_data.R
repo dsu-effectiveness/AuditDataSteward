@@ -93,13 +93,7 @@ get_stats_tables <- function(check_results,
   # before returning to minimize memory footprint but this intermediate object
   # may be large
   statusdf <- check_results %>%
-    map_dfr(~pivot_check_result(., checklist, id_cols = id_cols))
-
-  # data for DT to display--if desired
-  errordf <- NULL # Not sure if I like including an explicitly null element...
-  if (include_errors) {
-    errordf <- statusdf[statusdf$status == "Failure", ]
-  }
+    map_dfr(~pivot_check_result(., checklist, id_cols = id_cols), .id = "file")
 
   # static table to display
   error_summary <- statusdf %>%
@@ -130,9 +124,38 @@ get_stats_tables <- function(check_results,
 
   out <- list(five_stats = five_stats,
               error_summary = error_summary,
-              errors_byrule = errors_byrule,
-              errors = errordf)
+              errors_byrule = errors_byrule)
+
+  # data for DT to display--if desired
+  if (include_errors) {
+    out$errors <- statusdf[statusdf$status == "Failure", ]
+
+    # dataframe with data values (not _stats, etc), for displaying in error table
+    out$values <- check_results %>%
+      map_dfr(~get_data_values(.), .id = "file") %>%
+      filter(paste0(file, row) %in% paste0(out$errors$file, out$errors$row))
+  }
+
   out
+}
+
+#' Returns a dataframe containing only columns of check_result_df that are data values (not status, etc)
+get_data_values <- function(check_result_df) {
+  out <- check_result_df %>%
+    select(!ends_with(c("_status", "_error_age", "_activity_date"))) %>%
+    mutate(row = 1:nrow(.))
+  out
+}
+
+#' Returns vector of variables referenced in the specified rule
+get_rule_variables <- function(rule, checklist = utValidateR::get_checklist()) {
+  rule_in = rule
+  checklist_row <- checklist %>%
+    filter(rule == rule_in)
+  stopifnot(nrow(checklist_row) == 1)
+  rule_expr <- checklist_row$checker[[1]]
+  rule_vars <- all.vars(rule_expr)
+  rule_vars
 }
 
 

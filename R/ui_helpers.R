@@ -40,16 +40,29 @@ format_summary_table <- function(summary_table) {
     )
 }
 
+
 #' Returns a DT::datatable object for displaying
 #'
 #' @param error_table dataframe as returned in `errors` component of `get_stats_tables()`
 #' @importFrom dplyr select
 #' @export
-format_error_table <- function(error_table, rule = NULL) {
-
+format_error_table <- function(error_table, value_table, rule = NULL,
+                               file = c("student", "course", "student_course")) {
+  file <- match.arg(file)
   rule_in <- rule
-  if (!is.null(rule_in))
-    error_table <- dplyr::filter(error_table, rule %in% rule_in)
+  all_rules <- unique(error_table$rule)
+  if (length(rule_in) > 0 && rule_in %in% all_rules) {
+
+    join_vars <- c("row", "file")
+    off_limits_vars <- setdiff(names(error_table), join_vars) # don't want to display these twice!
+
+    valuedf_tojoin <- get_rule_info(value_table, rule = rule_in, id_vars = join_vars) %>%
+      select(!any_of(off_limits_vars))
+
+    error_table <- dplyr::filter(error_table, rule %in% rule_in) %>%
+      left_join(valuedf_tojoin, by = join_vars)
+
+  }
 
   out <- error_table %>%
     select(-row) %>%
@@ -64,6 +77,22 @@ format_error_table <- function(error_table, rule = NULL) {
   out
 }
 
+#' returns a dataframe with columns <id_vars>, rule, description, <value vars>
+get_rule_info <- function(valuedf, rule, id_vars = c("row", "file")) {
+  rule_in <- rule
+  checklist <- utValidateR::get_checklist()
+
+  checklist_row <- dplyr::filter(checklist, rule == rule_in)
+  stopifnot(nrow(checklist_row) == 1L)
+
+  rule_vars <- get_rule_variables(rule = rule_in, checklist = checklist)
+
+  out <- valuedf %>%
+    select(row, file, any_of(rule_vars)) %>%
+    mutate(description = checklist_row$description,
+           expr = paste(deparse(checklist_row$checker[[1]]), collapse = "\n"))
+  out
+}
 
 
 #' Returns a DT::datatable object for displaying
