@@ -72,7 +72,9 @@ format_error_table <- function(error_table, value_table, rule = NULL,
       options = list(scrollY = 300, scroller = TRUE, deferRender = TRUE),
       rownames = FALSE,
       filter = list(position = 'top', clear = TRUE, plain = FALSE),
-      extensions = "Scroller"
+      # filter = "none",
+      extensions = "Scroller",
+      fillContainer = TRUE
     )
   out
 }

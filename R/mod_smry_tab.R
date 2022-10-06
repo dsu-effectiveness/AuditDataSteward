@@ -52,7 +52,7 @@ mod_smry_tab_server <- function(id, stats_tables, file = c("student", "course", 
     output$rule_table <- renderDT(
       format_rule_table(stats_tables$errors_byrule)
     )
-    output$error_table <- renderDT({
+    output$error_table <- DT::renderDT({
       selected_rule <- stats_tables$errors_byrule$rule[input$rule_table_rows_selected]
       format_error_table(stats_tables$errors,
                          stats_tables$values,
