@@ -5,10 +5,10 @@
 \title{Returns a list of lists of tables used by the app. Top level is per UI tab,
 each element as returned by `get_stats_tables()`}
 \usage{
-get_app_data(session = shiny::getDefaultReactiveDomain())
+get_app_data(check_results)
 }
 \arguments{
-\item{check_results}{Results of `utValidateR::do_checks()`, as returned by `load_data_in()`}
+\item{check_results}{Results of `utValidateR::do_checks()`, e.g. as returned by `load_data_in()`}
 }
 \description{
 Returns a list of lists of tables used by the app. Top level is per UI tab,

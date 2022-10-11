@@ -8,6 +8,9 @@
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
 run_app <- function(
+  student_result = dummy_result("student"),
+  student_course_result = dummy_result("student_course"),
+  course_result = dummy_result("course"),
   onStart = NULL,
   options = list(),
   enableBookmarking = NULL,
@@ -23,6 +26,10 @@ run_app <- function(
       enableBookmarking = enableBookmarking,
       uiPattern = uiPattern
     ),
-    golem_opts = list(...)
+    golem_opts = list(
+      student_result = student_result,
+      course_result = course_result,
+      student_course_result = student_course_result,
+      ...)
   )
 }

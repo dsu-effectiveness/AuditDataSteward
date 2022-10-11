@@ -2,11 +2,10 @@
 #' Returns a list of lists of tables used by the app. Top level is per UI tab,
 #' each element as returned by `get_stats_tables()`
 #'
-#' @param check_results Results of `utValidateR::do_checks()`, as returned by `load_data_in()`
+#' @param check_results Results of `utValidateR::do_checks()`, e.g. as returned by `load_data_in()`
 #' @importFrom purrr map imap
-get_app_data <- function(session = shiny::getDefaultReactiveDomain()) {
+get_app_data <- function(check_results) {
 
-  check_results <- load_data_in(session = session)
   checklist <- get_utValidateR_checklist()
 
   out <- imap(check_results,
@@ -36,17 +35,24 @@ get_pivot_id_cols <- function(file = c("student", "course", "student_course")) {
   out
 }
 
+dummy_result <- function(file = c("student", "course", "student_course")) {
+  file <- match.arg(file)
+
+  path <- app_sys("dev-data", paste0(file, "_res.rds"))
+  out <- readRDS(path)
+  out
+}
 
 #' Pull in the results of utValidateR checks
 #'
 #' Currenlty just loads saved dummy data from dev-data/
 load_data_in <- function(session = shiny::getDefaultReactiveDomain()) {
 
-  studentdf <- withModal(readRDS(app_sys("dev-data/student_res.rds")),
+  studentdf <- withModal(dummy_result("student"),
                          "Loading Student Data", session)
-  coursedf <- withModal(readRDS(app_sys("dev-data/course_res.rds")),
+  coursedf <- withModal(dummy_result("course"),
                         "Loading Course Data", session)
-  student_coursedf <- withModal(readRDS(app_sys("dev-data/student_course_res.rds")),
+  student_coursedf <- withModal(dummy_result("student_course"),
                                 "Loading Student-Course Data", session)
 
   check_results <- list(

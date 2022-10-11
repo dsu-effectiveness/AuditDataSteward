@@ -5,6 +5,9 @@
 \title{Run the Shiny Application}
 \usage{
 run_app(
+  student_result = dummy_result("student"),
+  student_course_result = dummy_result("student_course"),
+  course_result = dummy_result("course"),
   onStart = NULL,
   options = list(),
   enableBookmarking = NULL,
