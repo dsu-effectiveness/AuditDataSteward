@@ -51,7 +51,7 @@ format_error_table <- function(error_table, value_table, rule = NULL,
   file <- match.arg(file)
   rule_in <- rule
   all_rules <- unique(error_table$rule)
-  if (length(rule_in) > 0 && rule_in %in% all_rules) {
+  if (length(rule_in) > 0) {
 
     join_vars <- c("row", "file")
     off_limits_vars <- setdiff(names(error_table), join_vars) # don't want to display these twice!
