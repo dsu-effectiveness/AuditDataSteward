@@ -31,6 +31,7 @@ run_app <- function(
       student_result = student_result,
       course_result = course_result,
       student_course_result = student_course_result,
+      building_result = building_result,
       ...)
   )
 }
