@@ -12,6 +12,7 @@ run_app <- function(
   student_course_result = dummy_result("student_course"),
   course_result = dummy_result("course"),
   building_result = dummy_result("building"),
+  room_result = dummy_result("room"),
   onStart = NULL,
   options = list(),
   enableBookmarking = NULL,
@@ -32,6 +33,7 @@ run_app <- function(
       course_result = course_result,
       student_course_result = student_course_result,
       building_result = building_result,
+      room_result = room_result,
       ...)
   )
 }

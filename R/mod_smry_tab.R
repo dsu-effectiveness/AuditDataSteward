@@ -40,7 +40,7 @@ mod_smry_tab_ui <- function(id, perspective){
 #' @importFrom DT renderDT
 #' @importFrom gt render_gt
 #' @noRd
-mod_smry_tab_server <- function(id, stats_tables, file = c("student", "course", "student_course", "building")) {
+mod_smry_tab_server <- function(id, stats_tables, file = c("student", "course", "student_course", "building", "room")) {
   file <- match.arg(file)
   moduleServer( id, function(input, output, session){
     ns <- session$ns
