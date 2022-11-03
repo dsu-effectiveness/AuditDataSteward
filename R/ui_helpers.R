@@ -38,6 +38,7 @@ format_summary_table <- function(summary_table) {
       pct_errors = "Percent",
       age = "Age"
     )
+  out
 }
 
 

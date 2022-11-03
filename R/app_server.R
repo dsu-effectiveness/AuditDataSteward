@@ -25,5 +25,5 @@ app_server <- function(input, output, session) {
   mod_smry_tab_server("courses_smry", app_data$course, file = "course")
   mod_smry_tab_server("student_courses_smry", app_data$student_course, file = "student_course")
   mod_smry_tab_server("faculty_workload_smry", app_data$student, file = "student")
-  mod_smry_tab_server("building_smry", app_data$building, file = "building") # TODO
+  mod_smry_tab_server("buildings_smry", app_data$building, file = "building") # TODO
 }
