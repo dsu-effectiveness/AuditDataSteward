@@ -25,8 +25,9 @@ app_ui <- function(request) {
         ),
         mod_smry_tab_ui("student_smry", "Student"), # returns a tabPanel
         mod_smry_tab_ui("courses_smry", "Courses"),
-        mod_smry_tab_ui("student_courses_smry", "Student Courses")#,
-        # mod_smry_tab_ui("faculty_workload_smry", "Faculty Workload")
+        mod_smry_tab_ui("student_courses_smry", "Student Courses"),
+        mod_smry_tab_ui("buildings_smry", "Buildings"),
+        mod_smry_tab_ui("faculty_workload_smry", "Faculty Workload")
       ),
       theme = bslib::bs_theme(bootswatch = "spacelab") # TODO: update theme
     )

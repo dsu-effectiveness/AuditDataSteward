@@ -47,7 +47,7 @@ format_summary_table <- function(summary_table) {
 #' @importFrom dplyr select
 #' @export
 format_error_table <- function(error_table, value_table, rule = NULL,
-                               file = c("student", "course", "student_course")) {
+                               file = c("student", "course", "student_course", "building")) {
   file <- match.arg(file)
   rule_in <- rule
   all_rules <- unique(error_table$rule)
