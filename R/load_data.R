@@ -24,18 +24,19 @@ get_app_data <- function(check_results) {
 #' Returns the vector of id columns for the relevant file's error table
 #'
 #' This will need to be updated in future.
-get_pivot_id_cols <- function(file = c("student", "course", "student_course")) {
+get_pivot_id_cols <- function(file = c("student", "course", "student_course", "building")) {
   file <- match.arg(file)
 
   out <- if (file == "student") c("term_id", "student_id", "first_name", "last_name")
   else if (file == "course") c("term_id", "course_reference_number")
   else if (file == "student_course") c("course_reference_number", "sis_student_id", "sis_system_id")
+  else if (file == "building") c("building_number")
   else stop("file has no associated id_cols")
 
   out
 }
 
-dummy_result <- function(file = c("student", "course", "student_course")) {
+dummy_result <- function(file = c("student", "course", "student_course", "building")) {
   file <- match.arg(file)
 
   path <- app_sys("dev-data", paste0(file, "_res.rds"))
@@ -54,11 +55,14 @@ load_data_in <- function(session = shiny::getDefaultReactiveDomain()) {
                         "Loading Course Data", session)
   student_coursedf <- withModal(dummy_result("student_course"),
                                 "Loading Student-Course Data", session)
+  buildingdf <- withModal(dummy_result("building"),
+                          "Loading Building Data", session)
 
   check_results <- list(
     student = studentdf,
     course = coursedf,
-    student_course = student_coursedf
+    student_course = student_coursedf,
+    building = buildingdf
   )
 }
 
