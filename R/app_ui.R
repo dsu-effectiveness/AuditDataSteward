@@ -12,7 +12,7 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("AuditDataSteward"),
+      h1("Data Steward Audit Report"),
       tabsetPanel(
         tabPanel(
           "Home",
