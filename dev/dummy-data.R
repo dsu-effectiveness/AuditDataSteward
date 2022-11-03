@@ -46,14 +46,18 @@ student_course_res <- do_checks(fake_student_course_validation,
                                 student_course_checks,
                                 aux_info = aux_info)
 
+building_checks <- checklist %>%
+  filter(file == "Buildings", type == "Database")
+
+building_res <- do_checks(fake_buildings_validation,
+                          checklist = building_checks,
+                          aux_info = aux_info)
+
 
 # Save in dev-data/  ------------------------------------------------------
 
-saveRDS(student_res, "dev-data/student_res.rds")
-saveRDS(course_res, "dev-data/course_res.rds")
-saveRDS(graduation_res, "dev-data/graduation_res.rds")
-saveRDS(student_course_res, "dev-data/student_course_res.rds")
-
-
-
-
+saveRDS(student_res, "inst/dev-data/student_res.rds")
+saveRDS(course_res, "inst/dev-data/course_res.rds")
+saveRDS(graduation_res, "inst/dev-data/graduation_res.rds")
+saveRDS(student_course_res, "inst/dev-data/student_course_res.rds")
+saveRDS(building_res, "inst/dev-data/building_res.rds")

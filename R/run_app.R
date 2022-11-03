@@ -11,6 +11,7 @@ run_app <- function(
   student_result = dummy_result("student"),
   student_course_result = dummy_result("student_course"),
   course_result = dummy_result("course"),
+  building_result = dummy_result("building"),
   onStart = NULL,
   options = list(),
   enableBookmarking = NULL,
