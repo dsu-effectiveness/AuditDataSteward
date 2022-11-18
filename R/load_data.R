@@ -138,18 +138,18 @@ get_stats_tables <- function(check_results,
     group_by(table, rule) %>%
     summarize(n_data = n(),
               n_errors = sum(status == "Failure"),
-              age = mean(age, na.rm = TRUE) #TODO: should this be across errors only? Could be biased by missingness
+              age = round(mean(age, na.rm = TRUE), digits = 2) #TODO: should this be across errors only? Could be biased by missingness
     ) %>%
     ungroup() %>%
-    mutate(pct_errors = n_errors / n_data * 100) %>%
+    mutate(pct_errors = round(n_errors / n_data * 100, digits = 2)) %>%
     arrange(desc(n_errors))
 
   # 5-stat summary to display
   five_stats <- statusdf %>%
     summarize(n_errors = sum(status == "Failure"),
-              avg_age = mean(age, na.rm = TRUE),
+              avg_age = round(mean(age, na.rm = TRUE), digits = 2),
               n_data = max(row),
-              pct_errors = sum(status == "Failure") / n() * 100,
+              pct_errors = round(sum(status == "Failure") / n() * 100, digits = 2),
               n_tables = length(unique(table)))
 
   out <- list(five_stats = five_stats,
