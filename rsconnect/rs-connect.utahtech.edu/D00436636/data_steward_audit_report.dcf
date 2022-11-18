@@ -1,0 +1,13 @@
+name: data_steward_audit_report
+title: Data Steward Audit Report
+username: D00436636
+account: D00436636
+server: rs-connect.utahtech.edu
+hostUrl: https://rs-connect.utahtech.edu/__api__
+appId: 145
+bundleId: 5793
+url: https://rs-connect.utahtech.edu/content/63418baf-0ee5-4488-8470-db7ad75ce384/
+when: 1668784014.02255
+lastSyncTime: 1668784014.02257
+asMultiple: FALSE
+asStatic: FALSE

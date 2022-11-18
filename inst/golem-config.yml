@@ -1,0 +1,8 @@
+default:
+  golem_name: DataStewardAudits
+  golem_version: 0.0.0.9000
+  app_prod: no
+production:
+  app_prod: yes
+dev:
+  golem_wd: /Users/justinpfeifer/My Documents/Git Projects/ut_repo/DataStewardAudits
