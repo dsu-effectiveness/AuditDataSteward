@@ -36,10 +36,10 @@ app_ui <- function(request) {
           ),
         mod_smry_tab_ui("student_smry", "Student"),
         mod_smry_tab_ui("courses_smry", "Course"),
-        mod_smry_tab_ui("student_course_smry", "Student Courses"),
+        mod_smry_tab_ui("student_course_smry", "Student Course"),
         mod_smry_tab_ui("graduation_smry", "Graduation"),
-        mod_smry_tab_ui("building_smry", "Buildings"),
-        mod_smry_tab_ui("room_smry", "Rooms")
+        mod_smry_tab_ui("building_smry", "Building"),
+        mod_smry_tab_ui("room_smry", "Room")
       )
     )
   ))
