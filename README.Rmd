@@ -40,7 +40,10 @@ devtools::install_github("dsu-effectiveness/AuditDataSteward", ref = "develop")
 
 This is a basic example of how to run the package:
 
-```{r example}
+run edify.R in /dev to which pulls the data from Edify and runs the validation checks
+run app.R to load the dashboard
+
+```r
 #library(AuditDataSteward)
 ## basic example code
 #AuditDataSteward::run_app()
