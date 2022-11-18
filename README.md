@@ -1,35 +1,23 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # DataStewardAudits
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-
 ## Installation
 
-utValidateR is a prerequisite for the AuditDataSteward app. To install from github:
+utValidateR is a prerequisite for the AuditDataSteward app. To install
+from github:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("dsu-effectiveness/utValidateR")
 ```
 
-
-You can then install the development version of AuditDataSteward from [GitHub](https://github.com/) with:
+You can then install the development version of AuditDataSteward from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -40,7 +28,7 @@ devtools::install_github("dsu-effectiveness/AuditDataSteward", ref = "develop")
 
 This is a basic example of how to run the package:
 
-```{r example}
+``` r
 #library(AuditDataSteward)
 ## basic example code
 #AuditDataSteward::run_app()
