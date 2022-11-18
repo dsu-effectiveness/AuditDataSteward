@@ -69,6 +69,7 @@ building_res <- do_checks(df_tocheck = buildings,
 #Saves pull as rds files to the sensitive folder
 df_names <- c("student_res", "course_res", "student_course_res", "building_res", "room_res", "graduation_res")
 
+dir.create(here::here("sensitive"))
 
 # Saving as rds files to sensitive
 for (i in 1:length(df_names)) {
