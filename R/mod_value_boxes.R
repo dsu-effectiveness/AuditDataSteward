@@ -56,7 +56,7 @@ mod_value_boxes_server <- function(id, five_stats){
                color = n_total_color,
                width = 2))
     output$pct_errors_valbox <- renderValueBox(
-      valueBox(value = paste0(round(five_stats$pct_errors, digits = 2), "%"),
+      valueBox(value = paste0(five_stats$pct_errors, "%"),
                subtitle = "Pct. Errors",
                icon = icon("percent"),
                color = pct_errors_color,
