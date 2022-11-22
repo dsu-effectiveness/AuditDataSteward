@@ -6,6 +6,7 @@ library(utHelpR)
 library(utValidateR)
 
 print("running Edify.R Script")
+#utHelpR::set_edify_password()
 
 student <- utHelpR::get_data_from_sql_file(file_name = 'student.sql',
                                            dsn = 'edify',
