@@ -1,6 +1,7 @@
           /* Graduation Validation Query */
             SELECT a.student_id,
                    a.sis_system_id,
+                   a.program_code as primary_program_id,
                    c.dixie_ssn AS ssn,
                    c.last_name,
                    c.first_name,
@@ -43,6 +44,11 @@
             -- TODO: Add activity dates here
                    a.shrdgmr_activity_date,
                    b.shrtgpa_activity_date,
+                   b.stvmajr_activity_date,
+                   c.sabsupl_activity_date,
+                   c.spriden_activity_date,
+                   c.goradid_activity_date,
+                   c.spbpers_activity_date,
                    d.gorsdav_activity_date
               FROM quad.student_degree_program_application a
          LEFT JOIN quad.student_term_level b
