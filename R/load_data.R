@@ -30,7 +30,7 @@ get_pivot_id_cols <- function(file = c("student", "course", "student_course", "g
   out <- if (file == "student") c("term_id", "student_id", "first_name", "last_name")
   else if (file == "course") c("term_id", "course_reference_number", "subject_code", "course_number", "section_number")
   else if (file == "student_course") c("term_id", "course_reference_number", "subject_code", "course_number", "sis_student_id")
-  else if (file == "graduation") c("graduated_term_id, student_id", "first_name", "last_name")
+  else if (file == "graduation") c("term_id", "student_id", "first_name", "last_name")
   else if (file == "building") c("building_abbrv")
   else if (file == "room") c("buildings_id", "room_number")
   else stop("file has no associated id_cols")
@@ -63,15 +63,15 @@ load_data_in <- function(session = shiny::getDefaultReactiveDomain()) {
 
   studentdf <- withModal(read_result(data_type = "edify", file = "student"),
                          "Loading Student Data", session)
-  coursedf <- withModal(read_result(data_type = "dummy", file = "course"),
+  coursedf <- withModal(read_result(data_type = "edify", file = "course"),
                         "Loading Course Data", session)
-  student_coursedf <- withModal(read_result(data_type = "dummy", file = "student_course"),
+  student_coursedf <- withModal(read_result(data_type = "edify", file = "student_course"),
                                 "Loading Student-Course Data", session)
-  graduationdf <- withModal(read_result(data_type = "dummy", file = "graduation"),
+  graduationdf <- withModal(read_result(data_type = "edify", file = "graduation"),
                             "Loading Graduation Data", session)
-  buildingdf <- withModal(read_result(data_type = "dummy", file = "building"),
+  buildingdf <- withModal(read_result(data_type = "edify", file = "building"),
                           "Loading Building Data", session)
-  roomdf <- withModal(read_result(data_type = "dummy", file = "room"),
+  roomdf <- withModal(read_result(data_type = "edify", file = "room"),
                       "Loading Room Data", session)
 
   check_results <- list(
