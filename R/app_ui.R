@@ -6,31 +6,43 @@
 #' @importFrom shinyWidgets useShinydashboard
 #' @noRd
 app_ui <- function(request) {
-  tagList(
-    # Leave this function for adding external resources
+  tagList(# Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("Data Steward Audit Report"),
-      tabsetPanel(
-        tabPanel("Home",
-        column(width = 8,
-               h3("Summary"),
-               mod_value_boxes_ui("value_boxes_1"),
-               gt_output("home_summary_table"),
-               offset = 2
-               )
-      ),
-      mod_smry_tab_ui("student_smry", "Student"), # returns a tabPanel
-      mod_smry_tab_ui("courses_smry", "Course"),
-      mod_smry_tab_ui("student_course_smry", "Student Courses"),
-      mod_smry_tab_ui("graduation_smry", "Graduation"),
-      mod_smry_tab_ui("building_smry", "Buildings"),
-      mod_smry_tab_ui("room_smry", "Rooms")
-      ),
-      theme = bslib::bs_theme(bootswatch = "spacelab")
+      shiny::navbarPage(
+        title = title_logo(),
+        windowTitle = "Data Steward Audit Report",
+        theme = litera_theme(),
+        tabsetPanel(
+          # overwrite existing color set value boxes
+          tags$style(
+            ".small-box.bg-red { background-color: #940809 !important; }
+             .small-box.bg-yellow { background-color: #003962 !important; }
+             .small-box.bg-blue { background-color: #8A725A !important; }
+             .small-box.bg-green { background-color: #605E33 !important; }
+             .small-box.bg-orange { background-color: #AC5C1D !important; }
+            "
+            ),
+          tabPanel(
+            "Home",
+            column(
+              width = 8,
+              h2("Summary"),
+              mod_value_boxes_ui("value_boxes_1"),
+              gt_output("home_summary_table"),
+              offset = 2
+            )
+          ),
+        mod_smry_tab_ui("student_smry", "Student"),
+        mod_smry_tab_ui("courses_smry", "Course"),
+        mod_smry_tab_ui("student_course_smry", "Student Course"),
+        mod_smry_tab_ui("graduation_smry", "Graduation"),
+        mod_smry_tab_ui("building_smry", "Building"),
+        mod_smry_tab_ui("room_smry", "Room")
+      )
     )
-  )
+  ))
 }
 
 #' Add external Resources to the Application
