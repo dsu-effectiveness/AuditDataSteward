@@ -36,7 +36,7 @@
                    d.required_credits,
                    c.latest_high_school_code AS high_school_code,
                    a.graduated_academic_year_code,
-                   a.graduated_term_id,
+                   a.graduated_term_id AS term_id,
                    e.term_type AS season,
                    a.primary_major_college_desc,
                    a.primary_major_desc,
