@@ -135,7 +135,7 @@ get_stats_tables <- function(check_results,
 
   # by-rule summary for drill-down
   errors_byrule <- statusdf %>%
-    group_by(table, rule) %>%
+    group_by(table, rule, description) %>%
     summarize(n_data = n(),
               n_errors = sum(status == "Failure"),
               age = round(mean(age, na.rm = TRUE), digits = 2) #TODO: should this be across errors only? Could be biased by missingness
@@ -227,9 +227,13 @@ pivot_check_result <- function(check_result, checklist, id_cols) {
     pivot_longer(cols = !c(row, any_of(id_cols)), names_to = "rule", values_to = "status") %>%
     mutate(rule = gsub("_status$", "", rule))
 
+  ruledf <- utValidateR::checklist %>%
+    select(description, rule)
+
   out <- statusdf %>%
     left_join(agedf, by = c("row", "rule")) %>%
-    left_join(bannerdf, by = "rule")
+    left_join(bannerdf, by = "rule") %>%
+    left_join(ruledf, by = "rule")
 
   out
 }
