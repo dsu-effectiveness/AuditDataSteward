@@ -71,12 +71,17 @@ format_error_table <- function(error_table, value_table, rule = NULL,
     rename(Table = table, Rule = rule, `Age (days)` = age) %>%
     DT::datatable(
       data = .,
-      options = list(scrollY = 300, scroller = TRUE, deferRender = TRUE),
-      rownames = FALSE,
+      options = list(
+        scrollY = 300,
+        scroller = TRUE,
+        deferRender = TRUE,
+        dom = "Bfrtip",
+        buttons = c('copy', 'csv')),
+      rownames = TRUE,
       filter = list(position = 'top', clear = TRUE, plain = FALSE),
       # filter = "none",
-      extensions = "Scroller",
-      fillContainer = TRUE
+      extensions = c("Scroller", "Buttons"),
+      fillContainer = TRUE,
     )
   out
 }
@@ -115,42 +120,4 @@ format_rule_table <- function(rule_table) {
       selection = "single"
     )
   out
-}
-
-#' Create title logo
-#'
-#' Returns UT logo with correct dimensions for app title.
-#' #' Create title logo
-#'
-#' Returns UT logo with correct dimensions for app title.
-title_logo = function() {
-  shiny::div(
-    style = "text-align: justify; width:150;",
-    shiny::tags$img(
-      style = "display: block;
-               margin-left:5px;
-               margin-top:0px;
-               margin-bottom:0px",
-      src = "www/ie_logo.png",
-      width = "240",
-      height = "80",
-      alt = "UT Data"
-    ),
-    shiny::h3(stringr::str_to_upper("Data Steward Audit Report"),
-              style = "position: absolute;
-                right: 1%;
-                top: 10%;
-                margin-top: 25px;")
-  )
-}
-
-#' Create custom litera theme
-litera_theme = function() {
-  bslib::bs_theme(
-    bootswatch = "litera",
-    bg = "#FFFFFF", fg = "#000",
-    primary = "#B5302A",
-    base_font = bslib::font_google("Source Serif Pro"),
-    heading_font = bslib::font_google("Josefin Sans", wght = 100)
-  )
 }
