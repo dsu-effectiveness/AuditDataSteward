@@ -18,9 +18,9 @@ app_ui <- function(request) {
     # Your application UI logic
     fluidPage(
       shiny::navbarPage(
-        title = title_logo(),
-        #windowTitle = "Data Steward Audit Report",
         theme = litera_theme(),
+        title = title_logo(),
+        windowTitle = "Data Steward Audit Report",
         tabPanel(title = "Home",
           column(
             width = 10,
@@ -36,7 +36,9 @@ app_ui <- function(request) {
         mod_smry_tab_ui("student_course_smry", "Student Course"),
         mod_smry_tab_ui("graduation_smry", "Graduation"),
         mod_smry_tab_ui("building_smry", "Building"),
-        mod_smry_tab_ui("room_smry", "Room"),
+        mod_smry_tab_ui("room_smry", "Room")
+        ),
+      mainPanel(
           tags$style(
             ".small-box.bg-red { background-color: #940809 !important; }
              .small-box.bg-yellow { background-color: #003962 !important; }
