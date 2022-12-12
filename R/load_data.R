@@ -196,6 +196,8 @@ extra_rule_vars <- function(rule) {
     c("meet_building_id_2")
   } else if (rule == "C35a") {
     c("meet_building_id_1")
+  } else if (rule %in% c("C39a", "C39b", "C39c", "C40a", "C40b", "C40c")) {
+    c("meet_start_date", "meet_end_date")
   } else {
     character(0)
   }
