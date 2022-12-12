@@ -161,6 +161,7 @@ get_data_values <- function(check_result_df) {
   out
 }
 
+
 #' Returns vector of variables referenced in the specified rule
 get_rule_variables <- function(rule, checklist = utValidateR::get_checklist()) {
   rule_in = rule
@@ -168,10 +169,21 @@ get_rule_variables <- function(rule, checklist = utValidateR::get_checklist()) {
     filter(rule == rule_in)
   stopifnot(nrow(checklist_row) == 1)
   rule_expr <- checklist_row$checker[[1]]
-  rule_vars <- all.vars(rule_expr)
+  rule_vars <- c(all.vars(rule_expr), extra_rule_vars(rule_in))
   rule_vars
 }
 
+#' Additional per-rule variables to display in error drill-down
+extra_rule_vars <- function(rule) {
+  out <- if (rule == "C35d") {
+    c("meet_building_id_3")
+  # } else if (rule == "B15a") {
+  #   c("building_area_gross")
+  } else {
+    character(0)
+  }
+  out
+}
 
 #' Extract the table name from a banner field string
 #'
