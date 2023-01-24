@@ -5,9 +5,9 @@ account: D00436636
 server: rs-connect.utahtech.edu
 hostUrl: https://rs-connect.utahtech.edu/__api__
 appId: 145
-bundleId: 5910
+bundleId: 6010
 url: https://rs-connect.utahtech.edu/content/63418baf-0ee5-4488-8470-db7ad75ce384/
-when: 1671124895.45539
-lastSyncTime: 1671124895.45541
+when: 1674494082.44166
+lastSyncTime: 1674494082.44168
 asMultiple: FALSE
 asStatic: FALSE
