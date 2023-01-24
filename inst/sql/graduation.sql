@@ -22,6 +22,14 @@
                    c.is_international,
                    c.is_other_race,
                    a.graduation_date,
+                   CASE
+                       WHEN e.term_type IN ('Fall', 'Summer') THEN date_part('year', a.graduation_date) + 1
+                       ELSE date_part('year', a.graduation_date)
+                   END AS graduation_academic_year_check,
+                   CASE
+                       WHEN e.term_type IN ('Fall', 'Summer') THEN substr(graduated_term_id, 1,4) :: numeric + 1
+                       ELSE substr(graduated_term_id, 1,4) :: numeric
+                   END AS graduation_term_year_check,
                    a.primary_major_cip_code,
                    a.degree_id,
                    a.cumulative_graduation_gpa,
@@ -36,7 +44,7 @@
                    d.required_credits,
                    c.latest_high_school_code AS high_school_code,
                    a.graduated_academic_year_code,
-                   a.graduated_term_id AS term_id,
+                   a.graduated_term_id,
                    e.term_type AS season,
                    a.primary_major_college_desc,
                    a.primary_major_desc,
@@ -62,4 +70,4 @@
            LEFT JOIN quad.term e
                    ON e.term_id = a.graduated_term_id
              WHERE a.degree_status_code = 'AW'
-               AND EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM graduation_date) <= 5; -- Past 5 years
+               AND EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM graduation_date) <= 8; -- Past 5 years
