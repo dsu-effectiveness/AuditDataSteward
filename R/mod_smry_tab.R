@@ -26,6 +26,7 @@ mod_smry_tab_ui <- function(id, perspective){
 
            h3(paste0(perspective, " Errors")),
            DTOutput(ns("error_table")),
+
            offset = 2,
            br()
            )
@@ -48,14 +49,13 @@ mod_smry_tab_server <- function(id, stats_tables, file = c("student", "course", 
     output$rule_table <- renderDT(
       format_rule_table(stats_tables$errors_byrule)
     )
-    output$error_table <- DT::renderDT({
+    output$error_table <- DT::renderDT(server = FALSE, {
       selected_rule <- stats_tables$errors_byrule$rule[input$rule_table_rows_selected]
       format_error_table(stats_tables$errors,
                          stats_tables$values,
                          rule = selected_rule,
                          file = file)
-    },
-    server = TRUE
+      },
     )
   })
 }

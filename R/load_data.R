@@ -184,8 +184,24 @@ get_rule_variables <- function(rule, checklist = utValidateR::get_checklist()) {
     filter(rule == rule_in)
   stopifnot(nrow(checklist_row) == 1)
   rule_expr <- checklist_row$checker[[1]]
-  rule_vars <- all.vars(rule_expr)
+  rule_vars <- c(all.vars(rule_expr), extra_rule_vars(rule_in))
   rule_vars
+}
+
+#' Additional per-rule variables to display in error drill-down
+extra_rule_vars <- function(rule) {
+  out <- if (rule == "C35d") {
+    c("meet_building_id_3")
+  } else if (rule == "C35c") {
+    c("meet_building_id_2")
+  } else if (rule == "C35a") {
+    c("meet_building_id_1")
+  } else if (rule %in% c("C39a", "C39b", "C39c", "C40a", "C40b", "C40c")) {
+    c("meet_start_date", "meet_end_date")
+  } else {
+    character(0)
+  }
+  out
 }
 
 
