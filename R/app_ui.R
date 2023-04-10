@@ -8,13 +8,6 @@
 app_ui <- function(request) {
   tagList(# Leave this function for adding external resources
     golem_add_external_resources(),
-    shiny::tags$head(
-      tags$link(
-        rel = "stylesheet",
-        type = "text/css",
-        href = "litera_style.css"
-      )
-    ),
     # Your application UI logic
     fluidPage(
       shiny::navbarPage(
