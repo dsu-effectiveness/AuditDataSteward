@@ -26,7 +26,7 @@
                 b.is_international,
                 b.is_other_race,
                 b.ipeds_race_ethnicity,
-                a.residential_housing_code AS residency_code,
+                a.residency_code,
                 a.primary_major_cip_code,
                 a.student_type_code,
                 a.student_type_code,
