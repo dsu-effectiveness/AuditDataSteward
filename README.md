@@ -8,7 +8,7 @@
 
 ## Installation
 
-utValidateR is a prerequisite for the AuditDataSteward app. To install
+utValidateR is a prerequisite for the DataStewardAudits app. To install
 from github:
 
 ``` r
@@ -16,23 +16,25 @@ from github:
 devtools::install_github("dsu-effectiveness/utValidateR")
 ```
 
-You can then install the development version of AuditDataSteward from
+You can then install the development version of DataStewardAudits from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("dsu-effectiveness/AuditDataSteward", ref = "develop")
+devtools::install_github("dsu-effectiveness/DataStewardAudits", ref = "develop")
 ```
 
 ## Example
 
 This is a basic example of how to run the package:
 
-run edify.R in /dev to which pulls the data from Edify and runs the
-validation checks run app.R to load the dashboard
+run `load_data.R` in `/dev` to which pulls the data from Edify and runs
+the validation checks
+
+run `app.R` to load the dashboard
 
 ``` r
-#library(AuditDataSteward)
+#library(DataStewardAudits)
 ## basic example code
-#AuditDataSteward::run_app()
+#DataStewardAudits::run_app()
 ```
